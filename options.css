@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
+:root, :root[data-accent="green"] {
+  --accent: #4ade80;
+  --accent-hi: #22c55e;
+  --accent-rgb: 74, 222, 128;
+  --accent-dark: #0a1f10;
+}
+:root[data-accent="amber"]  { --accent: #fbbf24; --accent-hi: #f59e0b; --accent-rgb: 251, 191, 36;  --accent-dark: #1c1408; }
+:root[data-accent="blue"]   { --accent: #60a5fa; --accent-hi: #3b82f6; --accent-rgb: 96, 165, 250;  --accent-dark: #0b1424; }
+:root[data-accent="purple"] { --accent: #a78bfa; --accent-hi: #8b5cf6; --accent-rgb: 167, 139, 250; --accent-dark: #170f24; }
+
 :root {
   --bg: #0e1013;
   --bg-elev: #1a1d21;
@@ -7,8 +17,6 @@
   --text: #f2f2ef;
   --text-dim: #8a8e94;
   --text-faint: #5a5e64;
-  --accent: #4ade80;
-  --accent-hi: #22c55e;
   --amber: #fbbf24;
   --red: #f87171;
   --border: #2a2d32;
@@ -28,7 +36,7 @@ html, body {
 .ambient {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(1200px 500px at 10% -5%, rgba(74, 222, 128, 0.07), transparent 60%),
+    radial-gradient(1200px 500px at 10% -5%, rgba(var(--accent-rgb), 0.07), transparent 60%),
     radial-gradient(1000px 500px at 90% 110%, rgba(251, 191, 36, 0.04), transparent 60%);
 }
 
@@ -48,7 +56,7 @@ html, body {
 
 .hero-brand { display: flex; align-items: center; gap: 16px; }
 
-.hero-brand svg { filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.5)); flex-shrink: 0; }
+.hero-brand svg { filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.5)); flex-shrink: 0; }
 
 .hero h1 {
   font-family: 'Manrope', sans-serif; font-weight: 800;
@@ -107,7 +115,7 @@ html, body {
 .big-icon svg { color: var(--bg); }
 .big-streak .big-icon { background: rgba(251, 191, 36, 0.14); }
 .big-streak .big-icon svg { color: var(--amber); }
-.big-focus .big-icon { background: rgba(74, 222, 128, 0.14); }
+.big-focus .big-icon { background: rgba(var(--accent-rgb), 0.14); }
 .big-focus .big-icon svg { color: var(--accent); }
 .big-prevented .big-icon { background: rgba(96, 165, 250, 0.14); }
 .big-prevented .big-icon svg { color: #60a5fa; }
@@ -224,10 +232,10 @@ html, body {
 
 .btn-primary {
   background: linear-gradient(180deg, var(--accent), var(--accent-hi));
-  color: #0a1f10; border-color: transparent;
-  box-shadow: 0 4px 16px rgba(74,222,128,0.2);
+  color: var(--accent-dark); border-color: transparent;
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb),0.2);
 }
-.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 6px 22px rgba(74,222,128,0.3); }
+.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 6px 22px rgba(var(--accent-rgb),0.3); }
 
 .btn-secondary { background: var(--bg); }
 
@@ -300,7 +308,7 @@ html, body {
 }
 #site-input:focus {
   outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(74,222,128,0.14);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.14);
 }
 
 .site-favicon {
@@ -363,7 +371,7 @@ html, body {
 }
 .field input:focus {
   outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(74,222,128,0.14);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.14);
 }
 .field-row { display: flex; gap: 10px; }
 .field-row .field { flex: 1; }
@@ -378,7 +386,7 @@ html, body {
 }
 .day-picker button:hover { color: var(--text); border-color: var(--border-hi); }
 .day-picker button.on {
-  background: var(--accent); color: #0a1f10;
+  background: var(--accent); color: var(--accent-dark);
   border-color: var(--accent);
 }
 .day-presets { display: flex; gap: 6px; margin-top: 6px; }
@@ -415,7 +423,7 @@ html, body {
 .toast::before {
   content: ''; width: 6px; height: 6px;
   background: var(--accent); border-radius: 50%;
-  box-shadow: 0 0 6px rgba(74,222,128,0.6);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb),0.6);
 }
 @keyframes toastIn {
   from { opacity: 0; transform: translate(-50%, 12px); }

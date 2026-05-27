@@ -3,6 +3,18 @@ import { getActiveBlock, getNextTransition, parseHHMM } from './utils/scheduler.
 import { getLast7Days } from './utils/streak.js';
 import { normalizeDomain } from './utils/domains.js';
 
+const FLAME = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 2-4 0 2 2 2 2 4z M8 14c0 4 2 7 4 7s4-3 4-7c0 2-2 4-4 4s-4-2-4-4z"/></svg>';
+const SHIELD = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+const ACHIEVEMENTS = [
+  { id: 's3',   name: 'Tres días',    desc: 'Racha de 3 días',       icon: FLAME,  test: (s) => s.streak.best >= 3 },
+  { id: 's7',   name: 'Una semana',   desc: 'Racha de 7 días',       icon: FLAME,  test: (s) => s.streak.best >= 7 },
+  { id: 's14',  name: 'Dos semanas',  desc: 'Racha de 14 días',      icon: FLAME,  test: (s) => s.streak.best >= 14 },
+  { id: 's30',  name: 'Un mes',       desc: 'Racha de 30 días',      icon: FLAME,  test: (s) => s.streak.best >= 30 },
+  { id: 'b50',  name: '50 bloqueos',  desc: '50 distracciones esquivadas',  icon: SHIELD, test: (s) => s.stats.totalBlocksPrevented >= 50 },
+  { id: 'b250', name: '250 bloqueos', desc: '250 distracciones esquivadas', icon: SHIELD, test: (s) => s.stats.totalBlocksPrevented >= 250 }
+];
+
 const PRESETS = {
   social: ['twitter.com', 'x.com', 'instagram.com', 'facebook.com', 'linkedin.com', 'threads.net'],
   video: ['youtube.com', 'netflix.com', 'twitch.tv', 'tiktok.com', 'primevideo.com'],
@@ -46,6 +58,7 @@ function renderStatus() {
   const countdown = document.getElementById('status-countdown');
   const now = new Date();
   const active = getActiveBlock(state.schedules, now);
+  renderAchievements();
   if (active) {
     card.classList.add('active');
     title.textContent = 'Modo foco ACTIVO';
@@ -379,6 +392,7 @@ async function addPreset(preset) {
 function renderSettings() {
   document.getElementById('setting-motivational').checked = state.settings.motivationalMessagesEnabled;
   document.getElementById('setting-sound').checked = state.settings.soundEnabled;
+  applyAccent(state.settings.accentColor || 'green');
 }
 
 function initSettings() {
@@ -464,10 +478,118 @@ function renderAll() {
   renderSettings();
 }
 
+// ===== Achievements =====
+function renderAchievements() {
+  const strip = document.getElementById('achievements-strip');
+  if (!strip) return;
+  strip.innerHTML = '';
+  let unlocked = 0;
+  ACHIEVEMENTS.forEach((a) => {
+    const earned = a.test(state);
+    if (earned) unlocked++;
+    const badge = document.createElement('div');
+    badge.className = 'achievement-badge' + (earned ? ' unlocked' : '');
+    badge.innerHTML = a.icon + `<span class="tt">${earned ? '' : '🔒 '}${a.name} · ${a.desc}</span>`;
+    strip.appendChild(badge);
+  });
+  document.getElementById('achievements-unlocked').textContent = unlocked;
+  document.getElementById('achievements-total').textContent = ACHIEVEMENTS.length;
+}
+
+// ===== Pomodoro quick start =====
+async function startPomodoro(minutes) {
+  const now = new Date();
+  const endDate = new Date(now.getTime() + minutes * 60000);
+  if (endDate.getDate() !== now.getDate() || endDate.getMonth() !== now.getMonth()) {
+    toast('Cruza medianoche — no disponible');
+    return;
+  }
+  const start = `${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+  const end = `${pad2(endDate.getHours())}:${pad2(endDate.getMinutes())}`;
+  if (parseHHMM(end) <= parseHHMM(start)) {
+    toast('Demasiado tarde para este pomodoro');
+    return;
+  }
+  // Remove any existing pomodoros
+  state.schedules = state.schedules.filter((s) => !s.id.startsWith('pomodoro-'));
+  state.schedules.push({
+    id: 'pomodoro-' + Date.now(),
+    name: `Pomodoro ${minutes}min`,
+    days: [now.getDay()],
+    startTime: start,
+    endTime: end,
+    enabled: true,
+    expiresAt: endDate.getTime()
+  });
+  await setState({ schedules: state.schedules });
+  toast(`Foco activado · ${minutes} min`);
+  renderAll();
+}
+
+function initPomodoro() {
+  document.querySelectorAll('.pomodoro-btn').forEach((b) =>
+    b.addEventListener('click', () => startPomodoro(Number(b.dataset.min)))
+  );
+}
+
+// ===== Add current tab =====
+async function addCurrentTab() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab?.url) return toast('No hay pestaña visible');
+    let host;
+    try {
+      host = new URL(tab.url).hostname;
+    } catch (err) {
+      return toast('URL no válida');
+    }
+    const domain = normalizeDomain(host);
+    if (!domain) return toast('Dominio no bloqueable');
+    if (state.blockedSites.includes(domain)) return toast('Ya está en la lista');
+    state.blockedSites = [...state.blockedSites, domain].sort();
+    await setState({ blockedSites: state.blockedSites });
+    toast(`${domain} añadido`);
+    renderSites();
+  } catch (err) {
+    console.error('[popup] addCurrentTab', err);
+    toast('No se pudo leer la pestaña');
+  }
+}
+
+function initCurrentTab() {
+  const btn = document.getElementById('add-current-tab-btn');
+  if (btn) btn.addEventListener('click', addCurrentTab);
+}
+
+// ===== Theme accent =====
+function applyAccent(accent) {
+  const valid = ['green', 'amber', 'blue', 'purple'];
+  const v = valid.includes(accent) ? accent : 'green';
+  document.documentElement.dataset.accent = v;
+  document.querySelectorAll('.theme-swatch').forEach((s) =>
+    s.classList.toggle('active', s.dataset.accent === v)
+  );
+}
+
+function initTheme() {
+  document.querySelectorAll('.theme-swatch').forEach((s) =>
+    s.addEventListener('click', async () => {
+      const accent = s.dataset.accent;
+      state.settings.accentColor = accent;
+      applyAccent(accent);
+      await setState({ settings: state.settings });
+      toast('Color aplicado');
+    })
+  );
+}
+
 initTabs();
 initModal();
 initSites();
 initSettings();
+initPomodoro();
+initCurrentTab();
+initTheme();
 loadAndRender();
 
 chrome.storage.onChanged.addListener((_changes, area) => {

@@ -43,6 +43,27 @@
         </div>
       </div>
 
+      <div class="pomodoro-card">
+        <div class="pomodoro-head">
+          <span class="pomodoro-label">Foco ahora</span>
+          <span class="pomodoro-sub">Bloque temporal instantáneo</span>
+        </div>
+        <div class="pomodoro-actions">
+          <button class="pomodoro-btn" data-min="25">
+            <span class="pomo-num">25</span>
+            <span class="pomo-unit">min</span>
+          </button>
+          <button class="pomodoro-btn" data-min="50">
+            <span class="pomo-num">50</span>
+            <span class="pomo-unit">min</span>
+          </button>
+          <button class="pomodoro-btn" data-min="90">
+            <span class="pomo-num">90</span>
+            <span class="pomo-unit">min</span>
+          </button>
+        </div>
+      </div>
+
       <div class="countdown-card hidden" id="status-countdown">
         <div class="countdown-track">
           <div class="countdown-fill" id="countdown-fill"></div>
@@ -85,6 +106,14 @@
         </div>
         <div class="chart" id="chart-bars"></div>
       </div>
+
+      <div class="achievements-card">
+        <div class="achievements-head">
+          <span class="achievements-title">Logros</span>
+          <span class="achievements-sub mono"><span id="achievements-unlocked">0</span> / <span id="achievements-total">0</span></span>
+        </div>
+        <div class="achievements-strip" id="achievements-strip"></div>
+      </div>
     </section>
 
     <section class="panel" data-panel="schedules">
@@ -103,6 +132,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Añadir</button>
       </form>
+      <button class="btn btn-secondary btn-full btn-current-tab" id="add-current-tab-btn">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z M3 9V5a2 2 0 0 1 2-2h6l2 3h8a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Bloquear pestaña activa</span>
+      </button>
+
       <div class="chips">
         <button class="chip" data-preset="social">Redes sociales</button>
         <button class="chip" data-preset="video">Vídeo</button>
@@ -127,6 +161,16 @@
           </div>
           <input type="checkbox" id="setting-sound" />
         </label>
+      </div>
+
+      <div class="setting-section">
+        <span class="section-title">Color de acento</span>
+        <div class="theme-picker" id="theme-picker">
+          <button class="theme-swatch" data-accent="green" title="Verde"></button>
+          <button class="theme-swatch" data-accent="amber" title="Ámbar"></button>
+          <button class="theme-swatch" data-accent="blue" title="Azul"></button>
+          <button class="theme-swatch" data-accent="purple" title="Púrpura"></button>
+        </div>
       </div>
 
       <div class="setting-section">

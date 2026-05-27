@@ -1,5 +1,7 @@
 # FocusGuard
 
+Versión: **1.1.0** · MIT · Manifest V3
+
 Tu guardián del foco. Bloquea distracciones, construye tu racha.
 
 FocusGuard es una extensión de Chrome (Manifest V3) que bloquea webs distractoras
@@ -11,6 +13,13 @@ La idea detrás del diseño: los bloqueos rígidos fallan porque el usuario los
 desinstala. Los bloqueos con streaks funcionan porque nadie quiere perder su
 racha. Por eso FocusGuard añade fricción para romper, premia la constancia, y
 evita el tono de "app que regaña".
+
+## Novedades 1.1.0
+
+- **Pomodoro quick start**: botones 25/50/90 min en el panel Estado para crear un bloque de foco temporal e instantáneo (se autodestruye al expirar).
+- **Color de acento configurable**: cuatro paletas (verde, ámbar, azul, púrpura) que cambian toda la UI incluida la pantalla de bloqueo, con transición suave.
+- **Bloquear pestaña activa**: botón en la tab Webs que lee la URL actual y la añade en un click.
+- **Logros desbloqueables**: 6 badges visuales que se iluminan al alcanzar hitos de racha (3/7/14/30 días) y bloqueos prevenidos (50/250).
 
 ## Características
 

@@ -13,7 +13,7 @@ export const DEFAULT_STATE = {
   streak: { current: 0, best: 0, lastUpdateDate: null, brokeToday: false },
   focusTime: { today: 0, todayDate: null, history: [] },
   stats: { totalBlocksPrevented: 0, totalBreaks: 0 },
-  settings: { motivationalMessagesEnabled: true, soundEnabled: false, theme: 'dark' },
+  settings: { motivationalMessagesEnabled: true, soundEnabled: false, theme: 'dark', accentColor: 'green' },
   activeBreaks: []
 };
 

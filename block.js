@@ -24,10 +24,16 @@ if (site) {
 let countdownTimer = null;
 let activeBlockRef = null;
 
+function applyAccent(accent) {
+  const valid = ['green', 'amber', 'blue', 'purple'];
+  document.documentElement.dataset.accent = valid.includes(accent) ? accent : 'green';
+}
+
 async function refreshState() {
   try {
     const res = await chrome.runtime.sendMessage({ type: 'GET_STATE' });
     if (!res?.ok) return;
+    applyAccent(res.state.settings?.accentColor || 'green');
     document.getElementById('streak-current').textContent = res.state.streak.current;
     document.getElementById('streak-best').textContent = res.state.streak.best;
     document.getElementById('focus-today').textContent = res.state.focusTime.today;

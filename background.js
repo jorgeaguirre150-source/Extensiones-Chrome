@@ -1,5 +1,5 @@
 import { getState, setState, initialize } from './utils/storage.js';
-import { getActiveBlock, getNextTransition } from './utils/scheduler.js';
+import { getActiveBlock, getNextTransition, pruneExpiredSchedules } from './utils/scheduler.js';
 import { evaluateRollover, todayString } from './utils/streak.js';
 import { buildDomainRegex } from './utils/domains.js';
 
@@ -97,6 +97,12 @@ async function onTick() {
   const updates = evaluateRollover(state, now);
   if (Object.keys(updates).length > 0) {
     await setState(updates);
+  }
+  // Prune expired pomodoro schedules
+  const pruned = pruneExpiredSchedules(state.schedules, now);
+  if (pruned.length !== state.schedules.length) {
+    await setState({ schedules: pruned });
+    state.schedules = pruned;
   }
   const merged = { ...state, ...updates };
   const active = getActiveBlock(merged.schedules, now);

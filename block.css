@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
+:root, :root[data-accent="green"] {
+  --accent: #4ade80;
+  --accent-hi: #22c55e;
+  --accent-rgb: 74, 222, 128;
+  --accent-dark: #0a1f10;
+}
+:root[data-accent="amber"]  { --accent: #fbbf24; --accent-hi: #f59e0b; --accent-rgb: 251, 191, 36;  --accent-dark: #1c1408; }
+:root[data-accent="blue"]   { --accent: #60a5fa; --accent-hi: #3b82f6; --accent-rgb: 96, 165, 250;  --accent-dark: #0b1424; }
+:root[data-accent="purple"] { --accent: #a78bfa; --accent-hi: #8b5cf6; --accent-rgb: 167, 139, 250; --accent-dark: #170f24; }
+
 :root {
   --bg: #0e1013;
   --bg-elev: #1a1d21;
   --text: #f2f2ef;
   --text-dim: #8a8e94;
   --text-faint: #5a5e64;
-  --accent: #4ade80;
-  --accent-hi: #22c55e;
   --amber: #fbbf24;
   --red: #f87171;
   --border: #2a2d32;
@@ -38,7 +46,7 @@ html, body {
 .bg-glow {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(circle at 28% 28%, rgba(74, 222, 128, 0.14), transparent 45%),
+    radial-gradient(circle at 28% 28%, rgba(var(--accent-rgb), 0.14), transparent 45%),
     radial-gradient(circle at 78% 75%, rgba(251, 191, 36, 0.08), transparent 45%);
 }
 
@@ -68,13 +76,14 @@ html, body {
 
 .orb {
   margin-bottom: 28px;
-  filter: drop-shadow(0 0 28px rgba(74, 222, 128, 0.4));
+  color: var(--accent);
+  filter: drop-shadow(0 0 28px rgba(var(--accent-rgb), 0.4));
   animation: breathe 4s ease-in-out infinite;
 }
 
 @keyframes breathe {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.04); filter: drop-shadow(0 0 36px rgba(74, 222, 128, 0.55)); }
+  50% { transform: scale(1.04); filter: drop-shadow(0 0 36px rgba(var(--accent-rgb), 0.55)); }
 }
 
 .ring-1 { animation: spin 28s linear infinite; transform-origin: center; }
@@ -236,13 +245,13 @@ html, body {
 
 .btn-primary {
   background: linear-gradient(180deg, var(--accent), var(--accent-hi));
-  color: #0a1f10;
-  box-shadow: 0 4px 18px rgba(74, 222, 128, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color: var(--accent-dark);
+  box-shadow: 0 4px 18px rgba(var(--accent-rgb), 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 26px rgba(74, 222, 128, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 26px rgba(var(--accent-rgb), 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   filter: brightness(1.04);
 }
 

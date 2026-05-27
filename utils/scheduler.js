@@ -25,11 +25,18 @@ export function getActiveBlock(schedules, now = new Date()) {
   for (const sch of schedules) {
     if (!sch.enabled) continue;
     if (!sch.days.includes(day)) continue;
+    if (sch.expiresAt && sch.expiresAt < now.getTime()) continue;
     const start = parseHHMM(sch.startTime);
     const end = parseHHMM(sch.endTime);
     if (minutes >= start && minutes < end) return sch;
   }
   return null;
+}
+
+export function pruneExpiredSchedules(schedules, now = new Date()) {
+  if (!Array.isArray(schedules)) return [];
+  const ts = now.getTime();
+  return schedules.filter((s) => !(s.expiresAt && s.expiresAt < ts));
 }
 
 export function getBlockEnd(block, now = new Date()) {
@@ -40,7 +47,10 @@ export function getBlockEnd(block, now = new Date()) {
 }
 
 function getNextStart(schedules, now) {
-  const enabled = (schedules || []).filter((s) => s.enabled);
+  const ts = now.getTime();
+  const enabled = (schedules || []).filter(
+    (s) => s.enabled && !(s.expiresAt && s.expiresAt < ts)
+  );
   if (enabled.length === 0) return null;
   for (let offset = 0; offset <= 7; offset++) {
     const day = new Date(now);

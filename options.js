@@ -8,7 +8,13 @@ let editingScheduleId = null;
 
 async function load() {
   state = await getState();
+  applyAccent(state.settings?.accentColor || 'green');
   render();
+}
+
+function applyAccent(accent) {
+  const valid = ['green', 'amber', 'blue', 'purple'];
+  document.documentElement.dataset.accent = valid.includes(accent) ? accent : 'green';
 }
 
 function render() {

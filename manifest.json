@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "FocusGuard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tu guardián del foco. Bloquea distracciones, construye tu racha.",
   "permissions": ["storage", "alarms", "declarativeNetRequest", "tabs"],
   "host_permissions": ["<all_urls>"],
