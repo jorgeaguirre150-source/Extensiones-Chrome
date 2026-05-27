@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modo foco · FocusGuard</title>
+  <link rel="stylesheet" href="block.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-noise" aria-hidden="true"></div>
+
+  <main class="stage">
+    <div class="orb" aria-hidden="true">
+      <svg viewBox="0 0 200 200" width="180" height="180">
+        <defs>
+          <radialGradient id="orbGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4ade80" stop-opacity="0.4" />
+            <stop offset="60%" stop-color="#4ade80" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="98" fill="url(#orbGlow)" />
+        <circle class="ring ring-1" cx="100" cy="100" r="88" stroke="#4ade80" stroke-width="1.2" fill="none" opacity="0.2" />
+        <circle class="ring ring-2" cx="100" cy="100" r="64" stroke="#4ade80" stroke-width="1.4" fill="none" opacity="0.45" />
+        <circle class="ring ring-3" cx="100" cy="100" r="40" stroke="#4ade80" stroke-width="1.6" fill="none" opacity="0.75" />
+        <circle class="ring ring-4" cx="100" cy="100" r="20" stroke="#4ade80" stroke-width="1.8" fill="none" opacity="0.95" />
+        <circle class="dot" cx="100" cy="100" r="6" fill="#4ade80" />
+      </svg>
+    </div>
+
+    <h1 class="title">
+      Estás en modo foco.<br />
+      <span class="title-sub">Cada minuto cuenta.</span>
+    </h1>
+
+    <p class="motivational" id="motivational">Cargando…</p>
+
+    <div class="cards">
+      <div class="card card-time">
+        <span class="card-label">Tiempo restante</span>
+        <span class="card-value mono" id="time-remaining">--:--:--</span>
+        <div class="card-progress"><div class="card-progress-fill" id="time-progress"></div></div>
+      </div>
+      <div class="card card-streak">
+        <span class="card-label">Racha actual</span>
+        <span class="card-value mono"><span id="streak-current">0</span><small>días</small></span>
+        <span class="card-foot">Mejor: <span class="mono" id="streak-best">0</span></span>
+      </div>
+      <div class="card card-focus">
+        <span class="card-label">Min hoy</span>
+        <span class="card-value mono"><span id="focus-today">0</span></span>
+        <span class="card-foot">Sumando…</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="back-btn">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        <span>Volver atrás</span>
+      </button>
+      <button class="btn btn-ghost" id="break-btn">Romper bloqueo</button>
+    </div>
+
+    <div class="domain-pill mono">
+      <span class="domain-dot"></span>
+      <span id="domain"></span>
+    </div>
+  </main>
+
+  <div id="break-modal" class="modal" hidden>
+    <div class="modal-card">
+      <div class="modal-step" data-step="1">
+        <div class="modal-emoji" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="36" height="36"><path d="M12 2L2 22h20L12 2z M12 9v6 M12 17.5v.5" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <h3>¿Seguro?</h3>
+        <p>Vas a perder tu racha de <strong id="break-current-streak">0</strong> días.</p>
+        <p class="subtle">Tendrás 5 minutos de acceso a este dominio. Después se vuelve a bloquear automáticamente.</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="break-cancel-1">Mejor no</button>
+          <button class="btn btn-danger-soft" id="break-next">Continuar</button>
+        </div>
+      </div>
+      <div class="modal-step hidden" data-step="2">
+        <h3>Escribe ROMPER para confirmar</h3>
+        <p class="subtle">Para evitar romper la racha por accidente, escribe la palabra exacta en mayúsculas:</p>
+        <input type="text" id="break-input" placeholder="ROMPER" autocomplete="off" spellcheck="false" />
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="break-cancel-2">Cancelar</button>
+          <button class="btn btn-danger" id="break-confirm" disabled>Romper bloqueo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="block.js"></script>
+</body>
+</html>

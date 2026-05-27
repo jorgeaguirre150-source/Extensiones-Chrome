@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Claude Code local config
+.claude/
+
+# Build artifacts / packaging
+*.zip
+*.crx
+*.pem
+dist/
+build/
+
+# Node (in case a build pipeline is added later)
+node_modules/
+npm-debug.log*
+yarn-error.log*

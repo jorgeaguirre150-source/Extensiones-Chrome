@@ -1,0 +1,47 @@
+export const MOTIVATIONAL_MESSAGES = [
+  'El que domina su atención, domina su día.',
+  'La distracción no es enemigo. Es ruido. Sigue caminando.',
+  'Donde pones la atención, pones la vida.',
+  'Lo difícil de hoy es la libertad de mañana.',
+  'No controlamos el impulso, solo nuestra respuesta.',
+  'El foco es una decisión repetida.',
+  'Sé el dueño de tu mente, no su huésped.',
+  'Aceptar el malestar es el primer paso para superarlo.',
+  'Esto que ibas a mirar seguirá ahí en dos horas.',
+  'Apunta lo que querías hacer y vuelve después.',
+  'Si lo que ibas a ver es importante, lo recordarás luego.',
+  'Cierra esta pestaña. Abre la que importaba.',
+  'Veinticinco minutos más y habrá terminado el bloque.',
+  'No hay nada nuevo en redes desde que entraste esta mañana.',
+  'Tu yo de dentro de una hora te lo va a agradecer.',
+  'Si era urgente, no estabas aquí. Vuelve a lo tuyo.',
+  'No es debilidad querer entrar. Es humano. Y aun así, no entres.',
+  'Está bien sentir el impulso. No tienes que actuarlo.',
+  'Cansancio no es lo mismo que aburrimiento. Descansa de verdad.',
+  'No te juzgues por haberlo intentado. Cierra y sigue.',
+  'Estás aprendiendo a estar contigo sin estímulo.',
+  'No estás roto. Estás entrenando un músculo nuevo.',
+  'El impulso pasa en noventa segundos si no lo alimentas.',
+  'Respira. Esto no es una emergencia.',
+  'Cada vez que resistes, el impulso se hace más débil.',
+  'No entres. Punto.',
+  'Ya sabes que después te vas a arrepentir.',
+  'Una vez más, no.',
+  'Tu objetivo era otra cosa. Vuelve a él.',
+  'No negocies contigo. Tú ya decidiste esto antes.',
+  'Te conoces. Si entras, no sales en una hora.',
+  'No es ahora. Quizá luego. Probablemente no.',
+  '¿Otra vez tú por aquí? Hola. Sigue enfocado.',
+  'Spoiler: el feed sigue siendo igual de mediocre.',
+  'Si lo intentabas a propósito, enhorabuena. Si no, vuelve atrás.',
+  'No, no hay un meme nuevo que justifique esto.',
+  'Mira qué eficaz: ni siquiera te dejo procrastinar bien.',
+  'Bienvenido al rincón de "lo intenté pero no pude".',
+  'El algoritmo te echa de menos. Que se aguante.',
+  'Esta no es la pestaña que estabas buscando.'
+];
+
+export function pickRandomMessage() {
+  const arr = MOTIVATIONAL_MESSAGES;
+  return arr[Math.floor(Math.random() * arr.length)];
+}
