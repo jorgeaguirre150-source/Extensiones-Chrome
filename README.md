@@ -1,3 +1,17 @@
+# Extensiones-Chrome
+
+Repositorio de mis extensiones de Chrome. Ahora mismo contiene:
+
+| Carpeta / archivo | Qué es |
+|---|---|
+| **(raíz)** | **FocusGuard 1.1.0** — la extensión principal de este repo. El `manifest.json` y todo lo demás de FocusGuard vive directamente aquí para poder cargarla con `Load unpacked` sin atajos |
+| `focus-blocker/` | Predecesor más simple de FocusGuard — solo lista de webs bloqueadas, sin gamificación. Útil como referencia o starting kit |
+| `webstore/` | Paquete listo para subir FocusGuard al Chrome Web Store: descripciones, política de privacidad, justificación de permisos, tiles promocionales y checklist paso a paso |
+
+A continuación, la documentación de FocusGuard (la extensión principal).
+
+---
+
 # FocusGuard
 
 Versión: **1.1.0** · MIT · Manifest V3

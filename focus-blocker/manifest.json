@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Focus Blocker",
+  "version": "1.0.0",
+  "description": "Bloquea sitios que tu mismo agregas para mantener el foco.",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Focus Blocker"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["blocked.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
